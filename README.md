@@ -27,4 +27,4 @@ Projeto prático desenvolvido em Python para gestão de estoque via terminal. O 
 
 1. Clone o repositório ou faça o download dos arquivos:
    ```bash
-   git clone [https://github.com/Nando2705/controle-de-estoque.git](https://github.com/Nando2705/controle-de-estoque.git)
+   git clone [https://github.com/Nando2705/controle-de-estoque](https://github.com/Nando2705/controle-de-estoque)
