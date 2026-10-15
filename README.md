@@ -1,72 +1,56 @@
-# 📦 Controle de Estoque em Python e MySQL
+# Controle de Estoque
 
-Projeto de estudos desenvolvido em Python com integração ao MySQL para gerenciar produtos de um estoque.
+Projeto desenvolvido em Python com integração ao MySQL para gerenciar produtos e quantidades em estoque.
 
-O objetivo é aplicar, na prática, os conceitos de programação e banco de dados, evoluindo o sistema passo a passo.
+## Funcionalidades
 
-## 🚀 Funcionalidades implementadas
+- **Cadastrar produtos:** registra nome, quantidade e preço.
+- **Listar produtos:** exibe os produtos cadastrados.
+- **Buscar produtos:** localiza um produto pelo nome.
+- **Entrada de estoque:** adiciona unidades ao saldo existente.
+- **Saída de estoque:** retira unidades, verificando se há saldo suficiente.
+- **Validação:** impede quantidades negativas no cadastro e quantidades menores ou iguais a zero nas operações de entrada e saída.
 
-- **Listagem de produtos:** consulta os produtos cadastrados no banco de dados.
-- **Cadastro de produtos:** permite informar nome, quantidade e preço.
-- **Validação de quantidade:** impede o cadastro quando a quantidade informada é negativa.
-- **Menu interativo:** permite navegar pelas opções e encerrar o programa.
-- **Persistência de dados:** armazena os produtos no MySQL.
+## Tecnologias utilizadas
 
-## 🛠️ Tecnologias utilizadas
-
-- Python 3
+- Python
 - MySQL
-- `mysql-connector-python`
-- PyCharm
-- Git e GitHub
+- mysql-connector-python
+- SQL: `SELECT`, `INSERT` e `UPDATE`
 
-## 📚 Conceitos estudados
+## Estrutura do banco de dados
 
-### Python
+Banco: `estoque`
 
-- Variáveis e tipos de dados: `str`, `int` e `float`
-- Entrada de dados com `input()`
-- Conversão de tipos
-- Estruturas condicionais: `if`, `elif` e `else`
-- Laço de repetição `while`
-- Laço `for` para percorrer resultados
-- Uso de `break` para encerrar o menu
-- Indentação e organização do código
+Tabela: `produtos`
 
-### SQL e MySQL
+| Campo | Descrição |
+|---|---|
+| `id` | Identificador do produto |
+| `nome` | Nome do produto |
+| `quantidade` | Quantidade em estoque |
+| `preco` | Preço unitário |
 
-- Conexão com o banco de dados
-- Consulta de registros com `SELECT`
-- Recuperação de resultados com `fetchall()`
-- Inserção de registros com `INSERT INTO`
-- Uso de parâmetros nas consultas
-- Confirmação das alterações com `commit()`
-- Fechamento do cursor e da conexão
+## Como executar
 
-## ⚙️ Configuração do projeto
-
-1. Instale o Python 3.
-2. Instale o MySQL e crie o banco de dados `estoque`.
-3. Crie a tabela `produtos` com as colunas `id`, `nome`, `quantidade` e `preco`.
-4. Instale o conector do MySQL:
+1. Instale o Python e o MySQL.
+2. Instale a biblioteca de conexão:
 
    ```bash
    pip install mysql-connector-python
    ```
 
-5. Configure os dados de conexão no arquivo Python, usando as credenciais locais do MySQL.
-6. Execute `main.py`.
+3. Crie o banco de dados `estoque` e a tabela `produtos`, caso ainda não existam.
+4. Configure a variável de ambiente `MYSQL_PASSWORD` com a senha do usuário do MySQL.
+5. Confira os parâmetros de conexão no arquivo `main.py`.
+6. Execute o programa pelo PyCharm.
 
-**Segurança:** não publique senhas ou outras credenciais no repositório. Use variáveis de ambiente ou outra forma segura de configuração.
+## Segurança
 
-## 📈 Próximas melhorias
+As credenciais devem ficar fora do código-fonte. Não publique senhas no repositório.
 
-- Validar entradas que não sejam números.
-- Implementar busca de produtos.
-- Implementar entrada e saída de estoque.
-- Melhorar a organização do código.
-- Aprimorar o tratamento de erros.
+## Objetivo
 
-## 👨‍💻 Objetivo
+Praticar lógica de programação, Python, comandos SQL, validação de dados e integração com banco de dados relacional.
 
-Construir um projeto prático para consolidar os conhecimentos em Python, SQL e MySQL, desenvolvendo gradualmente uma aplicação de controle de estoque.
+Projeto em desenvolvimento, com funcionalidades implementadas e testadas gradualmente.
