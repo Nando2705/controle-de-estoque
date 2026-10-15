@@ -1,4 +1,14 @@
-estoque = []
+import os
+import mysql.connector
+
+conexao = mysql.connector.connect(
+    host='localhost',
+    user='root',
+    password=os.getenv('MYSQL_PASSWORD'),
+    database='estoque'
+)
+
+cursor = conexao.cursor()
 
 while True:
     print('=' * 10, end=' ')
@@ -21,76 +31,121 @@ while True:
         print('=' * 10, end=' ')
         print('Cadastro de Produtos', end=' ')
         print('=' * 10)
-        item = {'nome': input('Nome do produto: ').upper().strip(), 'quantidade': int(input('Quantidade: ')),
-                'preco': float(input('Preço: R$ '))}
 
-        estoque.append(item)
+        nome = input('Nome do produto: ').upper().strip()
+        quantidade = int(input('Quantidade: '))
+
+        if quantidade < 0:
+            print('Quantidade inválida!')
+        else:
+            preco = float(input('Preço: R$ '))
+            cursor.execute(
+                'INSERT INTO produtos (nome, quantidade, preco) VALUES (%s, %s, %s)',
+                (nome, quantidade, preco)
+            )
+            conexao.commit()
+            print('Produto cadastrado com sucesso!')
+
 
     if opcao == 2:
-        if not estoque:
-            print('Nenhum produto cadastrado!\n')
+        cursor.execute('SELECT * FROM produtos')
+        resultado = cursor.fetchall()
 
+        if not resultado:
+            print('Nenhum produto cadastrado!\n')
         else:
             print('=' * 10, end=' ')
             print('Produtos Cadastrados', end=' ')
             print('=' * 10)
 
-            for p in estoque:
-                print(f"Produto: {p['nome']}")
-                print(f"Quantidade: {p['quantidade']}")
-                print(f"Preço: R${p['preco']:.2f}")
+            for p in resultado:
+                print(f'Produto: {p[1]}')
+                print(f'Quantidade: {p[2]}')
+                print(f'Preço: R${p[3]:.2f}')
+                print('-' * 20)
 
     if opcao == 3:
         busca = input('Digite o nome do produto que deseja buscar: ').upper().strip()
-        encontrado = False
 
-        for b in estoque:
-            if busca == b['nome']:
-                encontrado = True
-                print('Produto encontrado!')
-                print(f"Produto: {b['nome']}")
-                print(f"Quantidade: {b['quantidade']}")
-                print(f"Preço: R${b['preco']:.2f}")
+        cursor.execute(
+            'SELECT * FROM produtos WHERE nome = %s',
+            (busca,)
+        )
+        resultado = cursor.fetchall()
 
-        if encontrado == False:
+        if not resultado:
             print('Não há produto cadastrado com este nome.\n')
+        else:
+            for b in resultado:
+                print('Produto encontrado!')
+                print(f'Produto: {b[1]}')
+                print(f'Quantidade: {b[2]}')
+                print(f'Preço: R${b[3]:.2f}')
 
     if opcao == 4:
-        busca = input('Digite o nome do produto que deseja buscar: ').upper().strip()
-        quant = int(input('Qual a quantidade deseja dar de entrada ? '))
-        encontrado = False
+        busca = input('Digite o nome do produto: ').upper().strip()
+        quant = int(input('Qual quantidade deseja dar de entrada? '))
 
-        for b in estoque:
-            if busca == b['nome']:
-                encontrado = True
-                print('-' * 30)
-                print('Produto encontrado!')
-                print(f"O saldo atual de {b['nome']} é de {b['quantidade']} unidades.")
-                b['quantidade'] += quant
-                print(f"O saldo atualizado é de {b['quantidade']} unidades.")
+        if quant <= 0:
+            print('Quantidade inválida!')
+        else:
+            cursor.execute(
+                'SELECT * FROM produtos WHERE nome = %s',
+                (busca,)
+            )
+            resultado = cursor.fetchall()
+
+            if not resultado:
+                print('Não há produto cadastrado com este nome.')
+            else:
+                cursor.execute(
+                    'UPDATE produtos SET quantidade = quantidade + %s WHERE nome = %s',
+                    (quant, busca)
+                )
+                conexao.commit()
+                print('Entrada de estoque realizada com sucesso!')
+
+                cursor.execute(
+                    'SELECT * FROM produtos WHERE nome = %s',
+                    (busca,)
+                )
+                resultado = cursor.fetchall()
+
+                for p in resultado:
+                    print(f"Produto: {p[1]}")
+                    print(f"Saldo atualizado: {p[2]} unidades.")
 
     if opcao == 5:
-        busca = input('Digite o nome do produto que deseja buscar: ').upper().strip()
-        quant = int(input('Qual a quantidade deseja dar de saída ? '))
-        encontrado = False
+        busca = input('Digite o nome do produto: ').upper().strip()
+        quant = int(input('Qual quantidade deseja dar de saída? '))
 
-        for b in estoque:
-            if busca == b['nome']:
-                encontrado = True
-                print('-' * 30)
-                print('Produto encontrado!')
+        if quant <= 0:
+            print('Quantidade inválida!')
+        else:
+            cursor.execute(
+                'SELECT * FROM produtos WHERE nome = %s',
+                (busca,)
+            )
+            resultado = cursor.fetchall()
 
-                if b['quantidade'] - quant < 0:
-                    print('Saldo indisponível !')
-                    print(f"O saldo atual de {b['nome']} é de {b['quantidade']} unidades.")
+            if not resultado:
+                print('Não há produto cadastrado com este nome.')
+            else:
+                for p in resultado:
+                    print(f"Produto: {p[1]}")
+                    print(f"Saldo atual: {p[2]} unidades.")
 
-                else:
-                    b['quantidade'] -= quant
-                    print(f"O saldo atualizado é de {b['quantidade']} unidades.")
+                    if quant > p[2]:
+                        print('Saldo insuficiente!')
+                    else:
+                        cursor.execute(
+                            'UPDATE produtos SET quantidade = quantidade - %s WHERE nome = %s',
+                            (quant, busca)
+                        )
+                        conexao.commit()
 
-                break
-
-        if not encontrado:
-            print('Não há produto cadastrado com este nome.\n')
+                        print('Saída de estoque realizada com sucesso!')
+                        print(f'Saldo atualizado: {p[2] - quant} unidades.')
 
 
+print('Programa encerrado!')
