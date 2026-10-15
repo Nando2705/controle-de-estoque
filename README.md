@@ -1,30 +1,72 @@
-# 📦 Sistema de Controle de Estoque em Python
+# 📦 Controle de Estoque em Python e MySQL
 
-Projeto prático desenvolvido em Python para gestão de estoque via terminal. O sistema permite cadastrar, listar e buscar produtos, além de realizar operações de movimentação (entradas e saídas) com controle de saldo.
+Projeto de estudos desenvolvido em Python com integração ao MySQL para gerenciar produtos de um estoque.
 
----
+O objetivo é aplicar, na prática, os conceitos de programação e banco de dados, evoluindo o sistema passo a passo.
 
-## 🚀 Funcionalidades
+## 🚀 Funcionalidades implementadas
 
-- **Cadastro de produtos:** Adiciona itens com nome, quantidade inicial e preço unitário.
-- **Listagem de estoque:** Exibe todos os produtos cadastrados e seus detalhes formatados.
-- **Busca rápida:** Permite localizar produtos específicos pelo nome.
-- **Entrada de estoque:** Adiciona novas unidades ao saldo existente.
-- **Saída de estoque:** Deduz unidades do estoque com validação para impedir saldo negativo.
+- **Listagem de produtos:** consulta os produtos cadastrados no banco de dados.
+- **Cadastro de produtos:** permite informar nome, quantidade e preço.
+- **Validação de quantidade:** impede o cadastro quando a quantidade informada é negativa.
+- **Menu interativo:** permite navegar pelas opções e encerrar o programa.
+- **Persistência de dados:** armazena os produtos no MySQL.
 
----
+## 🛠️ Tecnologias utilizadas
 
-## 🛠️ Tecnologias e Conceitos Utilizados
+- Python 3
+- MySQL
+- `mysql-connector-python`
+- PyCharm
+- Git e GitHub
 
-- **Linguagem:** Python 3
-- **Estruturas de Dados:** Listas e Dicionários (`list` e `dict`)
-- **Controle de Fluxo:** Laços de repetição (`while`, `for`) e estruturas condicionais (`if`, `elif`, `else`)
-- **Controle de Versão:** Git e GitHub com padrão de *Conventional Commits*
+## 📚 Conceitos estudados
 
----
+### Python
 
-## 💻 Como Executar o Projeto
+- Variáveis e tipos de dados: `str`, `int` e `float`
+- Entrada de dados com `input()`
+- Conversão de tipos
+- Estruturas condicionais: `if`, `elif` e `else`
+- Laço de repetição `while`
+- Laço `for` para percorrer resultados
+- Uso de `break` para encerrar o menu
+- Indentação e organização do código
 
-1. Clone o repositório ou faça o download dos arquivos:
+### SQL e MySQL
+
+- Conexão com o banco de dados
+- Consulta de registros com `SELECT`
+- Recuperação de resultados com `fetchall()`
+- Inserção de registros com `INSERT INTO`
+- Uso de parâmetros nas consultas
+- Confirmação das alterações com `commit()`
+- Fechamento do cursor e da conexão
+
+## ⚙️ Configuração do projeto
+
+1. Instale o Python 3.
+2. Instale o MySQL e crie o banco de dados `estoque`.
+3. Crie a tabela `produtos` com as colunas `id`, `nome`, `quantidade` e `preco`.
+4. Instale o conector do MySQL:
+
    ```bash
-   git clone [https://github.com/Nando2705/controle-de-estoque](https://github.com/Nando2705/controle-de-estoque)
+   pip install mysql-connector-python
+   ```
+
+5. Configure os dados de conexão no arquivo Python, usando as credenciais locais do MySQL.
+6. Execute `main.py`.
+
+**Segurança:** não publique senhas ou outras credenciais no repositório. Use variáveis de ambiente ou outra forma segura de configuração.
+
+## 📈 Próximas melhorias
+
+- Validar entradas que não sejam números.
+- Implementar busca de produtos.
+- Implementar entrada e saída de estoque.
+- Melhorar a organização do código.
+- Aprimorar o tratamento de erros.
+
+## 👨‍💻 Objetivo
+
+Construir um projeto prático para consolidar os conhecimentos em Python, SQL e MySQL, desenvolvendo gradualmente uma aplicação de controle de estoque.
